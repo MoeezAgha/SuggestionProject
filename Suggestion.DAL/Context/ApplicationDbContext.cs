@@ -40,6 +40,9 @@ namespace Suggestion.DAL.Context
 
         public DbSet<ApplicationUser> User { get; set; }
         public DbSet<ApplicationRole> Role { get; set; }
+
+        public DbSet<Tweet> Tweet { get; set; }
+
         //  public DbSet<UserLogin> UserLogins { get; set; }
 
     }

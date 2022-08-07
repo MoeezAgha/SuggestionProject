@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Suggestion.BL.Model
 {
@@ -18,14 +19,6 @@ namespace Suggestion.BL.Model
 
     public class ApplicationUser : IdentityUser<int>, IBaseEntity
     {
-        public ApplicationUser()
-        {
-
-            CreatedBy = Email;
-            ModifiedBy = Email;
-            UserName = Email;
-
-        }
 
 
         public string? CreatedBy { get; set; }
@@ -35,6 +28,23 @@ namespace Suggestion.BL.Model
         public string? UserImage { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public DateTime DateModified { get; set; } = DateTime.UtcNow;
+
+        public ICollection<Tweet> UserTweet { get; set; }
+    }
+
+    public class Tweet
+    {
+
+        [Key]
+        public int TweetId { get; set; }
+
+        [StringLength(300)]
+
+        public string UserTweet { get; set; }
+
+
+        public ApplicationUser User { get; set; }
+
     }
 
 

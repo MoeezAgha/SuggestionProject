@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Suggestion.DAL.Context;
 
@@ -10,9 +11,10 @@ using Suggestion.DAL.Context;
 namespace Suggestion.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220730194521_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
@@ -231,27 +233,6 @@ namespace Suggestion.DAL.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Suggestion.BL.Model.Tweet", b =>
-                {
-                    b.Property<int>("TweetId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserTweet")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TweetId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Tweet");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Suggestion.BL.Model.ApplicationRole", null)
@@ -301,22 +282,6 @@ namespace Suggestion.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Suggestion.BL.Model.Tweet", b =>
-                {
-                    b.HasOne("Suggestion.BL.Model.ApplicationUser", "User")
-                        .WithMany("UserTweet")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Suggestion.BL.Model.ApplicationUser", b =>
-                {
-                    b.Navigation("UserTweet");
                 });
 #pragma warning restore 612, 618
         }

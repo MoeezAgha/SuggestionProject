@@ -9,14 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggestion.Server", "Sugges
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggestion.UI.Shared", "Suggestion.UI.Shared\Suggestion.UI.Shared.csproj", "{5C28CD99-D323-4803-8DE7-3B0846D8E99F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suggestion.BL", "Suggestion.BL\Suggestion.BL.csproj", "{A00ADB4F-7C2C-4E05-B602-A364A91E1C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggestion.BL", "Suggestion.BL\Suggestion.BL.csproj", "{A00ADB4F-7C2C-4E05-B602-A364A91E1C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suggestion.DAL", "Suggestion.DAL\Suggestion.DAL.csproj", "{7C37E730-0BBD-48E9-8BB1-8EC8CFC835EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggestion.DAL", "Suggestion.DAL\Suggestion.DAL.csproj", "{7C37E730-0BBD-48E9-8BB1-8EC8CFC835EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D74DDF72-F4F4-4A69-A136-0D06C2E68E0B}"
 	ProjectSection(SolutionItems) = preProject
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suggestion.Shared.Model", "Suggestion.Shared.Model\Suggestion.Shared.Model.csproj", "{28EBC81C-F0CA-4D41-AB08-9AC19AF2D3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{7C37E730-0BBD-48E9-8BB1-8EC8CFC835EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C37E730-0BBD-48E9-8BB1-8EC8CFC835EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C37E730-0BBD-48E9-8BB1-8EC8CFC835EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EBC81C-F0CA-4D41-AB08-9AC19AF2D3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EBC81C-F0CA-4D41-AB08-9AC19AF2D3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EBC81C-F0CA-4D41-AB08-9AC19AF2D3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EBC81C-F0CA-4D41-AB08-9AC19AF2D3E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

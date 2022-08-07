@@ -1,13 +1,20 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Blazored.LocalStorage;
+using Suggestion.Client;
 using Suggestion.Client.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddSingleton<AppState>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+//builder.Services.AddLocalStorage();
+
+
+
+
 
 var app = builder.Build();
 

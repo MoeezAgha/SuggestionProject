@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject CustomAuthStateProvider AuthenticationStateProvider
 
 <PageTitle>Index</PageTitle>
 
@@ -9,4 +10,68 @@ Welcome to your new app.
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @using Suggestion.UI.Shared
+@using System.Security.Claims
 <Component1></Component1>
+
+
+@*<AuthorizeView>
+    <Authorized>
+        <h1>Hello @context.User.Identity.Name !!</h1>
+
+        <p>Welcome to your new app.</p>
+
+        <SurveyPrompt Title="How is Blazor working for you?" />
+    </Authorized>
+    <Authorizing>
+        <h1>Loading ...</h1>
+    </Authorizing>
+</AuthorizeView>*@
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <h1>Hello, @context.User.Identity.Name!</h1>
+        <p>You can only see this content if you're authenticated.</p>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+
+
+<button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
+
+<p>@authMessage</p>
+
+@if (claims.Count() > 0)
+{
+    <ul>
+        @foreach (var claim in claims)
+        {
+            <li>@claim.Type: @claim.Value</li>
+        }
+    </ul>
+}
+
+<p>@surnameMessage</p>
+
+@code {
+    private string authMessage;
+    private string surnameMessage;
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            authMessage = $"{user.Identity.Name} is authenticated.";
+            claims = user.Claims;
+            surnameMessage =
+                $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        }
+        else
+        {
+            authMessage = "The user is NOT authenticated.";
+        }
+    }
+}

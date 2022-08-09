@@ -1,18 +1,34 @@
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Suggestion.Client;
 using Suggestion.Client.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddSingleton<AppState>();
+
+builder.Services.AddHttpClient();
+//builder.Services.AddScoped<AppState>();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddAuthorizationCore();
 //builder.Services.AddLocalStorage();
+builder.Services.AddHttpContextAccessor();
 
 
+builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
+builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
+
+
+//builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddBlazoredLocalStorage();
+
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7168/") });
 
 
 

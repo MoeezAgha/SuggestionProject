@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Suggestion.Shared.Model.ViewModel;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,33 +16,69 @@ namespace Suggestion.Server.Controllers
         {
             _configuration = configuration;
         }
-
-        [HttpPost(Urls.Login)]
-        public IActionResult Login([FromBody] LoginDetails login)
+        [AllowAnonymous]
+        [HttpPost("api/login")]
+        public IActionResult Login([FromBody] LoginParameters login)
         {
-            if (login.Username == "admin" && login.Password == "SuperSecretPassword")
+            if (login.Email == "a" && login.Password == "a")
             {
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name, login.Username)
+                    new Claim(ClaimTypes.Name, login.Email),
+                    new Claim(ClaimTypes.Role, "RoleHelloo")
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var expiry = DateTime.Now.AddDays(Convert.ToInt32(_configuration["JwtExpiryInDays"]));
+                var user = Authenticate(login);
+                if (user != null)
+                {
 
-                var token = new JwtSecurityToken(
-                    _configuration["JwtIssuer"],
-                    _configuration["JwtIssuer"],
-                    claims,
-                    expires: expiry,
-                    signingCredentials: creds
-                );
+                    var token = Generate(user);
+                    return Ok(new JwToken { token = token });
 
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                }
+                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
+                //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                //var expiry = DateTime.Now.AddDays(Convert.ToInt32(_configuration["JwtExpiryInDays"]));
+
+                //var token = new JwtSecurityToken(
+                //    _configuration["JwtIssuer"],
+                //    _configuration["JwtIssuer"],
+                //    claims,
+                //    expires: expiry,
+                //    signingCredentials: creds
+                //);
+
             }
 
             return BadRequest("Username and password are invalid.");
+        }
+
+        private string Generate(LoginResult user)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+
+            var claims = new[] {
+
+                new Claim(ClaimTypes.NameIdentifier,user.UserName)
+
+            };
+            var token = new JwtSecurityToken(
+                _configuration["JwtIssuer"],
+                "https://localhost:7168/",
+                claims,
+                expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
+        }
+
+        private LoginResult Authenticate(LoginParameters loginDetails)
+        {
+            return new LoginResult { Email = "aghamoeez@gmail.com", Role = "Admin", UserName = "Agha" };
         }
     }
 }

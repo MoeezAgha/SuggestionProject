@@ -5,24 +5,27 @@ namespace Suggestion.Client.Pages
 {
     public class LoginModel : ComponentBase
     {
-        [Inject] private AppState _appState { get; set; }
-        // [Inject] private Microsoft.AspNetCore.Components.IUriHelper _uriHelper { get; set; }
+        //  [Inject] private AppState _appState { get; set; }
+        [Inject]
+        NavigationManager navigationManager { get; set; }
+        [Inject]
+        CustomAuthStateProvider AuthStateProvider { get; set; }
+        [Inject]
+        NavigationManager _uriHelper { get; set; }
 
-        protected LoginDetails LoginDetails { get; set; } = new LoginDetails();
+        protected LoginParameters LoginParameters { get; set; } = new LoginParameters();
         protected bool ShowLoginFailed { get; set; }
 
         protected async Task Login()
         {
-            await _appState.Login(LoginDetails);
 
-            if (_appState.IsLoggedIn)
-            {
-                //    _uriHelper.NavigateTo("/");
-            }
-            else
-            {
-                ShowLoginFailed = true;
-            }
+            _ = AuthStateProvider.Login(LoginParameters);
+
+
+
+
+            navigationManager.NavigateTo("/");
+
         }
     }
 }

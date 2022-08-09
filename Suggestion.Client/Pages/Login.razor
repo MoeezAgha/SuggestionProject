@@ -1,10 +1,11 @@
 ﻿
 @page "/login" 
+@using Blazored.LocalStorage
 @using Suggestion.Shared.Model.ViewModel
 
 @layout MainLayout
 @inherits LoginModel
-
+@inject ILocalStorageService _localStorage;
 
 <WdHeader Heading="WordDaze" SubHeading="Please Enter Your Login Details"></WdHeader>
 
@@ -18,8 +19,12 @@
                         Login attempt failed.
                     </div>
                 }
-                <input type="text" @bind=@LoginDetails.Username placeholder="Username" class="form-control" />
-                <input type="password" @bind=@LoginDetails.Password placeholder="Password" class="form-control" />
+                @{
+                 
+                
+                }
+                <input type="text" @bind=@LoginParameters.Email placeholder="Email" class="form-control" />
+                <input type="password" @bind=@LoginParameters.Password placeholder="Password" class="form-control" />
                 <button class="btn btn-primary" @onclick="@Login">Login</button>
             </div>
         </div>

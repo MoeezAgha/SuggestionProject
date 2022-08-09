@@ -22,23 +22,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(dbcontextOptions => //dbcont
 dbcontextOptions.UseSqlite(builder.Configuration.GetConnectionString("ConStr")), ServiceLifetime.Scoped
 );
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Password settings
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 6;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireLowercase = false;
+//builder.Services.Configure<IdentityOptions>(options =>
+//{
+//    // Password settings
+//    options.Password.RequireDigit = false;
+//    options.Password.RequiredLength = 6;
+//    options.Password.RequireNonAlphanumeric = false;
+//    options.Password.RequireUppercase = false;
+//    options.Password.RequireLowercase = false;
 
-    // Lockout settings
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-    options.Lockout.MaxFailedAccessAttempts = 10;
-    options.Lockout.AllowedForNewUsers = true;
+//    // Lockout settings
+//    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+//    options.Lockout.MaxFailedAccessAttempts = 10;
+//    options.Lockout.AllowedForNewUsers = true;
 
-    // User settings
-    options.User.RequireUniqueEmail = true;
-});
+//    // User settings
+//    options.User.RequireUniqueEmail = true;
+//});
 
 
 
@@ -53,15 +53,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateAudience = true,
-        ValidAudience = "domain.com",
+        ValidateAudience = false,
+        ValidAudience = builder.Configuration["Audience"],
         ValidateIssuer = true,
-        ValidIssuer = "domain.com",
+        ValidIssuer = builder.Configuration["JwtIssuer"],
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("THIS IS THE SECRET KEY")) // NOTE: THIS SHOULD BE A SECRET KEY NOT TO BE SHARED; A GUID IS RECOMMENDED
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JwtSecurityKey"])) // NOTE: THIS SHOULD BE A SECRET KEY NOT TO BE SHARED; A GUID IS RECOMMENDED
     };
 });
+
 
 
 #endregion
@@ -78,6 +79,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

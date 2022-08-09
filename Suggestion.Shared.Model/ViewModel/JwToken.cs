@@ -2,7 +2,7 @@
 {
     public class JwToken
     {
-        public string Token { get; set; }
+        public string token { get; set; }
     }
 
 

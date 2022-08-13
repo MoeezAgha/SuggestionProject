@@ -1,51 +1,19 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>Suggestion.Client</PageTitle>
+<PageTitle>BlazorApp18</PageTitle>
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <NavLink href="/" Match="NavLinkMatch.All">Home</NavLink>
-            </li>
-           
-        </ul>
-    </div>
+
     <main>
         <div class="top-row px-4">
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
- 
+
         <article class="content px-4">
-@*            @if (AppState.IsLoggedIn)
-            {
-                <li class="nav-item">
-                    <NavLink href="/addpost">Add Post</NavLink>
-                </li>
-                <li class="nav-item">
-                    <button class="logout" @onclick="Logout">Log Out</button>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <NavLink href="/login">Log In</NavLink>
-                </li>
-            }*@
             @Body
         </article>
     </main>
 </div>
-
-                    @code{
-                    
-    //[Inject] protected AppState AppState { get; set; }
-
-    //protected async Task Logout()
-    //{
-    //    await AppState.Logout();
-    //}
-                    }

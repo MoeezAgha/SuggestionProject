@@ -1,9 +1,9 @@
-﻿@page "/fetchdata"
+﻿@*@page "/fetchdata"
 
 <PageTitle>Weather forecast</PageTitle>
 
 @using Suggestion.Client.Data
-@inject WeatherForecastService ForecastService
+
 
 <h1>Weather forecast</h1>
 
@@ -46,3 +46,4 @@ else
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
     }
 }
+*@

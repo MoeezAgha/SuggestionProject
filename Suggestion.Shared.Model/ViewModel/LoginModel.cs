@@ -41,6 +41,10 @@ namespace Suggestion.Shared.Model.ViewModel
 
         public Dictionary<string, string> ExposedClaims { get; set; }
 
+        public string Token { get; set; }
+
+
+
 
     }
     public interface IUserInfo

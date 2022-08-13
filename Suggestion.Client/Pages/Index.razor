@@ -14,26 +14,14 @@ Welcome to your new app.
 <Component1></Component1>
 
 
-@*<AuthorizeView>
-    <Authorized>
-        <h1>Hello @context.User.Identity.Name !!</h1>
-
-        <p>Welcome to your new app.</p>
-
-        <SurveyPrompt Title="How is Blazor working for you?" />
-    </Authorized>
-    <Authorizing>
-        <h1>Loading ...</h1>
-    </Authorizing>
-</AuthorizeView>*@
-
+@*
 <CascadingAuthenticationState>
     <AuthorizeView>
         <h1>Hello, @context.User.Identity.Name!</h1>
         <p>You can only see this content if you're authenticated.</p>
     </AuthorizeView>
 </CascadingAuthenticationState>
-
+*@
 
 
 <button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>

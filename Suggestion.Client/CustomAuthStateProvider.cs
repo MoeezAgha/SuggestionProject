@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Suggestion.Shared.Model.ViewModel;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
@@ -9,19 +10,19 @@ namespace Suggestion.Client
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
-        private readonly ILocalStorageService _localStorage;
+        //  private readonly ILocalStorageService _localStorage;
         private readonly HttpClient _httpClient;
 
         private UserInfo _userInfoCache;
         private readonly IAuthorizeApi _authorizeApi;
-        //private readonly ProtectedSessionStorage protectedSessionStorage;
+        private readonly ILocalStorageService _localStorage;
 
 
 
-        public CustomAuthStateProvider(IAuthorizeApi authorizeApi, ILocalStorageService sessionStorageService)
+        public CustomAuthStateProvider(IAuthorizeApi authorizeApi, ILocalStorageService localStorage)
         {
             this._authorizeApi = authorizeApi;
-            _localStorage = sessionStorageService;
+            this._localStorage = localStorage;
 
         }
 
@@ -44,7 +45,7 @@ namespace Suggestion.Client
         {
             await _authorizeApi.Logout();
             _userInfoCache = null;
-            await _localStorage.RemoveItemAsync("UserInfo");
+            await _localStorage.RemoveItemAsync("token");
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
@@ -73,37 +74,40 @@ namespace Suggestion.Client
             return Convert.FromBase64String(base64);
         }
 
+
+
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
 
-            var identity = new ClaimsIdentity();
 
+            var identity = new ClaimsIdentity();
 
             try
             {
                 try
                 {
-                    var result = await _localStorage.GetItemAsync<string>("authToken");
-                    await GetClaimsWithToken(result);
+                    var token = await _localStorage.GetItemAsStringAsync("token");
+
+                    var jwthandler = new JwtSecurityTokenHandler();
+                    var jwttoken = jwthandler.ReadToken(token as string);
+                    var expDate = jwttoken.ValidTo;
+                    if (expDate < DateTime.UtcNow.AddMinutes(1))
+                    {
+
+                    }
 
 
-                    //if (result != null)
-                    //{
-                    //    var userInfo = result != null ? result : new UserInfo();
-                    //    userInfo = userInfo.ExposedClaims == null ? await GetUserInfo() : userInfo;
 
-                    //    if (userInfo.IsAuthenticated)
-                    //    {
-                    //        //  var getUser = await _authorizeApi.GetUserInfo(userInfo.ExposedClaims); 
-                    //        var claims = new[] { new Claim(ClaimTypes.Name, userInfo.UserName) }.Concat(userInfo.ExposedClaims.Select(c => new Claim(c.Key, c.Value)));
-                    //        var zclaims = new[] { new Claim("Email", claims.Where(c => c.Type.Contains("emailaddress"))?.FirstOrDefault()?.Value) };
-                    //        claims = claims.Concat(zclaims);
-                    //        identity = new ClaimsIdentity(claims, "Server authentication");
-                    //        await _localStorage.SetItemAsync<UserInfo>("UserInfo", userInfo);
-                    //        await _localStorage.SetItemAsync("UserInfo", userInfo);
+                    identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
-                    //    }
-                    //}
+                    var user = new ClaimsPrincipal(identity);
+                    var state = new AuthenticationState(user);
+                    NotifyAuthenticationStateChanged(Task.FromResult(state));
+
+
                 }
                 catch (Exception e)
                 {
@@ -130,7 +134,7 @@ namespace Suggestion.Client
         {
 
             var identity = new ClaimsIdentity();
-            _httpClient.DefaultRequestHeaders.Authorization = null;
+            //  _httpClient.DefaultRequestHeaders.Authorization = null;
 
             identity = new ClaimsIdentity(ParseClaimsFromJwt(jwt), "jwt");
             _httpClient.DefaultRequestHeaders.Authorization =

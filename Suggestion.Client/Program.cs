@@ -1,7 +1,6 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Suggestion.Client;
-using Suggestion.Client.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,7 @@ builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
 //builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddAuthorizationCore();
 //builder.Services.AddLocalStorage();
@@ -20,6 +19,7 @@ builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddScoped<CustomAuthStateProvider>();
+
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
 

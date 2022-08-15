@@ -1,12 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Suggestion.BL.Model;
 using System.Security.Claims;
 
 namespace Suggestion.Client.Pages
 {
     public partial class Index : ComponentBase
     {
+        public List<Tweet> Tweets { get; set; } = new List<Tweet>();
+        [Inject]
+        public HttpClient _httpClient { get; set; }
 
+
+        protected override async void OnInitialized()
+        {
+            Tweets = await _httpClient.GetFromJsonAsync<List<Tweet>>("api/fetchPost");
+            StateHasChanged();
+            base.OnInitialized();
+        }
         protected override Task OnAfterRenderAsync(bool firstRender)
         {
             return base.OnAfterRenderAsync(firstRender);

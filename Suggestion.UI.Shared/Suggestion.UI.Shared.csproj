@@ -15,4 +15,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Suggestion.DAL\Suggestion.DAL.csproj" />
+    <ProjectReference Include="..\Suggestion.Shared.Model\Suggestion.Shared.Model.csproj" />
+  </ItemGroup>
+
 </Project>

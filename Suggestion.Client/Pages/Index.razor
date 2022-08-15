@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/home"
 @attribute [Authorize]
 
 @using Suggestion.UI.Shared
@@ -6,8 +6,19 @@
 @using Suggestion.UI.Shared.wwwroot
 
 <!-- Page Container -->
+<MiddleColumn Value="Tweets" />
+           <CascadingAuthenticationState>
+         <AuthorizeView>
+                    <Authorized>
+  
+                        <br />
 
-       <MiddleColumn />
+                    </Authorized>
+
+                </AuthorizeView>
+            </CascadingAuthenticationState>
+
+
 
 
 

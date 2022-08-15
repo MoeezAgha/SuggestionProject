@@ -14,3 +14,11 @@
 **Microsoft.EntityFrameworkCore.SQLLite
 **Microsoft.EntityFrameworkCore.Tools
 **Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+
+
+
+Server startup
+
+DAL
+add-migration  relatioship__B/U__and__User

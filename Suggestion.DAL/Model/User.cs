@@ -42,7 +42,7 @@ namespace Suggestion.BL.Model
 
         public string UserTweet { get; set; }
 
-
+        public int UserId { get; set; }
         public ApplicationUser User { get; set; }
 
     }

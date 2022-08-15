@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Suggestion.BL.Model;
 using Suggestion.Shared.Model.ViewModel;
 
 namespace Suggestion.Client
@@ -17,8 +18,17 @@ namespace Suggestion.Client
             this._authStateProvider = authStateProvider;
         }
 
+        public async Task<List<Tweet>> Fetch()
+        {
+
+            var result = await _httpClient.GetFromJsonAsync<List<Tweet>>("api/fetchPost");
+
+            return result;
+        }
+
         public async Task Login(LoginParameters loginParameters)
         {
+            Fetch();
             //var stringContent = new StringContent(JsonSerializer.Serialize(loginParameters), Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsJsonAsync("api/Login", loginParameters);
             result.EnsureSuccessStatusCode();

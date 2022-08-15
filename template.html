@@ -259,3 +259,32 @@
 
 </body>
 </html>
+
+<!--app.razor:-->
+
+
+
+<!--@using Microsoft.AspNetCore.Components.Authorization
+@using YourBlazor.Client.Components
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            Current user: @context.User.Identity.Name
+            <Router AppAssembly="@typeof(App).Assembly">
+                <Found Context="routeData">
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                </Found>
+                <NotFound>
+                    <PageTitle>Not found</PageTitle>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p role="alert">Sorry, there's nothing at this address.</p>
+                    </LayoutView>
+                </NotFound>
+            </Router>
+        </Authorized>
+        <NotAuthorized>
+            <LoginRedirect />
+        </NotAuthorized>
+    </AuthorizeView>-->

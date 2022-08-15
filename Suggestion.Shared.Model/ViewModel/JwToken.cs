@@ -5,5 +5,4 @@
         public string token { get; set; }
     }
 
-
 }

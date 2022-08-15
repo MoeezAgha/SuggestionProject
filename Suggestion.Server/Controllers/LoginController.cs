@@ -25,10 +25,10 @@ namespace Suggestion.Server.Controllers
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Name, login.Email),
-                      new Claim(ClaimTypes.Email, login.Email),
+                    new Claim(ClaimTypes.Email, login.Email),
                     new Claim(ClaimTypes.Role, "RoleHelloo"),
-                      new Claim(ClaimTypes.NameIdentifier, "NameIdentifier"),
-                        new Claim(ClaimTypes.GivenName, "GivenName")
+                    new Claim(ClaimTypes.NameIdentifier, "NameIdentifier"),
+                    new Claim(ClaimTypes.GivenName, "GivenName")
                 };
 
                 var user = Authenticate(login);

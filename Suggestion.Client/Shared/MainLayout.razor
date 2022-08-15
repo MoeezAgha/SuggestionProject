@@ -1,32 +1,101 @@
-﻿@inherits LayoutComponentBase
+﻿@using Suggestion.UI.Shared.wwwroot
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider auth
+@using Microsoft.AspNetCore.Components.Authorization
 
+@*
 
 <CascadingAuthenticationState>
-<AuthorizeView>
+
+    <AuthorizeView>
+
+    </AuthorizeView>
+
+ 
+</CascadingAuthenticationState>
+*@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+</style>
+</head>
+<body class="w3-theme-l5" >
+    <NavMenu />
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div class="w3-col m3">
+                
+<CascadingAuthenticationState>
+        <AuthorizeView >
     <Authorized>
-        <button  class="btn btn-danger">Logout</button>
+          <Profile/>
+                <br />
+                <Accordion />
+                     <br />
+                <Interests />
+                <br />
+                <AlertBox />
     </Authorized>
-    <NotAuthorized>
-        <button  class="btn btn-primary">Login</button>
-    </NotAuthorized>
+ 
 </AuthorizeView>
 </CascadingAuthenticationState>
+           
+            </div>
+            <div class="w3-col m7">
 
+                <CascadingAuthenticationState>
+                    <AuthorizeView>
+                        <Authorized>
+                            <Status />
+                            <br />
+                      
+                        </Authorized>
 
+                    </AuthorizeView>
+                </CascadingAuthenticationState>
 
+            @Body
+            </div>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+            <CascadingAuthenticationState>
+                <AuthorizeView>
+                    <Authorized>
+                             <RightColumn />
+                        <br />
+
+                    </Authorized>
+
+                </AuthorizeView>
+            </CascadingAuthenticationState>
+     
+          
+        </div>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    <br>
+    <!-- Footer -->
+    <footer class="w3-container w3-theme-d3 w3-padding-16">
+        <h5>Footer</h5>
+    </footer>
+
+    <footer class="w3-container w3-theme-d5">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
+
+
+</body>
+</html>

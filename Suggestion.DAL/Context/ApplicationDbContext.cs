@@ -11,6 +11,11 @@ namespace Suggestion.DAL.Context
         {
 
         }
+
+        public ApplicationDbContext()
+        {
+        }
+
         //Add-Migration MigrationName -Project Suggestion.Server
         //protected void OnConfiguring(ModelBuilder modelBuilder)
         //{

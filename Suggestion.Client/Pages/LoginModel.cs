@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+using Microsoft.AspNetCore.Components;
 using Suggestion.Shared.Model.ViewModel;
 
 namespace Suggestion.Client.Pages
@@ -8,10 +9,13 @@ namespace Suggestion.Client.Pages
         //  [Inject] private AppState _appState { get; set; }
         [Inject]
         NavigationManager navigationManager { get; set; }
-        [Inject]
-        CustomAuthStateProvider AuthStateProvider { get; set; }
+        //[Inject]
+        //CustomAuthStateProvider AuthStateProvider { get; set; }
         [Inject]
         NavigationManager _uriHelper { get; set; }
+
+        [Inject]
+        IAuthorizeApi _IAuthorizeApi { get; set; }
 
         protected LoginParameters LoginParameters { get; set; } = new LoginParameters();
         protected bool ShowLoginFailed { get; set; }
@@ -19,7 +23,7 @@ namespace Suggestion.Client.Pages
         protected async Task Login()
         {
 
-            _ = AuthStateProvider.Login(LoginParameters);
+            _ = _IAuthorizeApi.Login(LoginParameters);
 
 
 
@@ -27,5 +31,7 @@ namespace Suggestion.Client.Pages
             navigationManager.NavigateTo("/");
 
         }
+
+
     }
 }

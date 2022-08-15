@@ -25,14 +25,18 @@ namespace Suggestion.Server.Controllers
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Name, login.Email),
-                    new Claim(ClaimTypes.Role, "RoleHelloo")
+                      new Claim(ClaimTypes.Email, login.Email),
+                    new Claim(ClaimTypes.Role, "RoleHelloo"),
+                      new Claim(ClaimTypes.NameIdentifier, "NameIdentifier"),
+                        new Claim(ClaimTypes.GivenName, "GivenName")
                 };
 
                 var user = Authenticate(login);
+
                 if (user != null)
                 {
 
-                    var token = Generate(user);
+                    var token = Generate(user, claims);
                     return Ok(new JwToken { token = token });
 
                 }
@@ -53,22 +57,22 @@ namespace Suggestion.Server.Controllers
             return BadRequest("Username and password are invalid.");
         }
 
-        private string Generate(LoginResult user)
+        private string Generate(LoginResult user, Claim[] claims)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 
-            var claims = new[] {
+            //var claims = new[] {
 
-                new Claim(ClaimTypes.NameIdentifier,user.UserName)
+            //    new Claim(ClaimTypes.NameIdentifier,user.UserName)
 
-            };
+            //};
             var token = new JwtSecurityToken(
                 _configuration["JwtIssuer"],
                 "https://localhost:7168/",
                 claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddSeconds(60),
                 signingCredentials: creds
             );
 
